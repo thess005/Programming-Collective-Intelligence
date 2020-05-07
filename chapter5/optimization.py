@@ -83,7 +83,7 @@ def randomoptimize(domain,costf):
     if cost<best:
       best=cost
       bestr=r 
-  return r
+  return bestr
 
 def hillclimb(domain,costf):
   # Create a random solution
@@ -97,9 +97,9 @@ def hillclimb(domain,costf):
     for j in range(len(domain)):
       # One away in each direction
       if sol[j]>domain[j][0]:
-        neighbors.append(sol[0:j]+[sol[j]+1]+sol[j+1:])
-      if sol[j]<domain[j][1]:
         neighbors.append(sol[0:j]+[sol[j]-1]+sol[j+1:])
+      if sol[j]<domain[j][1]:
+        neighbors.append(sol[0:j]+[sol[j]+1]+sol[j+1:])
 
     # See what the best solution amongst the neighbors is
     current=costf(sol)
@@ -136,7 +136,7 @@ def annealingoptimize(domain,costf,T=10000.0,cool=0.95,step=1):
     # Calculate the current cost and the new cost
     ea=costf(vec)
     eb=costf(vecb)
-    p=pow(math.e,(-eb-ea)/T)
+    p=pow(math.e,-(eb-ea)/T)
 
     # Is it better, or does it make the probability
     # cutoff?
